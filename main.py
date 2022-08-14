@@ -26,7 +26,7 @@ db = mysql.connector.connect(host=os.getenv("db_host"),
                  ),
              ])
 async def truth(ctx: interactions.CommandContext, question_type: str = None):
-    print(f"Question requested. Type: {question_type}")
+    print(f"Question requested by {ctx.member.nick}. Type: {question_type}")
     if question_type is None or (question_type != "chill" and question_type != "reflective"):
         question_type = random.choice(["chill", "reflective"])
         print(f"Type assigned: {question_type}")
