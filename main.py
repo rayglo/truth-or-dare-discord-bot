@@ -30,7 +30,6 @@ async def truth(ctx: interactions.CommandContext, question_type: str = None):
     if question_type is None or (question_type != "chill" and question_type != "reflective"):
         question_type = random.choice(["chill", "reflective"])
         print(f"Type assigned: {question_type}")
-
     if question_type == "chill":
         query1 = "SELECT chill_latest FROM servers WHERE server_id=%s"
         query2 = "SELECT id, truth_text FROM chill_truths ORDER BY RAND() LIMIT 1;"
@@ -68,7 +67,7 @@ async def truth(ctx: interactions.CommandContext, question_type: str = None):
     db.commit()
     c.close()
 
-    await ctx.send(embeds=interactions.Embed(title=f"Question {id}", description=response))
+    await ctx.send(embeds=interactions.Embed(title=response, description=f"type: {question_type}|id: {id}"))
 
 
 @bot.event()
