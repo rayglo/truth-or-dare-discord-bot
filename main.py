@@ -17,9 +17,20 @@ c.close()
 
 
 @bot.command(name="truth",
-             description="comando di prova",
-             scope=840200870359466004)
-async def truth(ctx: interactions.CommandContext):
+             scope=840200870359466004,
+             options=[
+                 interactions.Option(
+                     name="q_type",
+                     description="You can choose either a chill or reflective question",
+                     type=interactions.OptionType.STRING,
+                     required=False,
+                     choices=[
+                         interactions.Choice(name="chill", value="chill"),
+                         interactions.Choice(name="reflective", value="reflective")
+                     ]
+                 ),
+             ])
+async def truth(ctx: interactions.CommandContext, q_type: str):
     query1 = "SELECT array_latest FROM servers WHERE server_id=%s"
     c = db.cursor()
     c.execute(query1, (str(ctx.guild_id),))
