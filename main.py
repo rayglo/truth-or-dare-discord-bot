@@ -9,18 +9,6 @@ db = mysql.connector.connect(host=os.getenv("db_host"),
                              password=os.getenv("db_pass"),
                              database=os.getenv("db_name"))
 
-c = db.cursor()
-c.execute("SELECT COUNT(*) FROM chill_truths")
-n_chill_truths = c.fetchone()[0]
-print(f"rows in chill_truths: {n_chill_truths}")
-c.close()
-
-c = db.cursor()
-c.execute("SELECT COUNT(*) FROM reflective_truths")
-n_reflective_truths = c.fetchone()[0]
-print(f"rows in reflective_truths: {n_reflective_truths}")
-c.close()
-
 
 @bot.command(name="truth",
              description="A cool question for you",
@@ -106,3 +94,4 @@ async def on_guild_create(ctx: interactions.api.Guild):
 
 
 bot.start()
+print("Bot started")
