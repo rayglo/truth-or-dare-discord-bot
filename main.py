@@ -68,7 +68,7 @@ async def truth(ctx: interactions.CommandContext, question_type: str = None):
     db.commit()
     c.close()
 
-    await ctx.send(response)
+    await ctx.send(embeds=interactions.Embed(title=f"Question {id}", description=response))
 
 
 @bot.event()
