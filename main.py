@@ -4,7 +4,10 @@ import interactions
 import mysql.connector
 
 bot = interactions.Client(token=os.getenv("token"))
-db = mysql.connector.connect(host="localhost", user="root", password="root", database="tod")
+db = mysql.connector.connect(host=os.getenv("db_host"),
+                             user=os.getenv("db_user"),
+                             password=os.getenv("db_pass"),
+                             database=os.getenv("db_name"))
 
 c = db.cursor()
 c.execute("SELECT COUNT(*) FROM truths")
@@ -27,7 +30,7 @@ async def truth(ctx: interactions.CommandContext):
     c.close()
     n_rand = random.randint(1, n_truths)
     while n_rand in recent_questions_2:
-        n_rand = random.randint(1, n_truths)
+        n_rand = random.randint(1, ((n_truths-1)*10)+2, 10)
     if len(recent_questions_2) >= 10:
         recent_questions_2.pop()
     recent_questions_2.insert(0, n_rand)
