@@ -92,6 +92,5 @@ async def on_guild_create(ctx: interactions.api.Guild):
     db.commit()
     c.close()
 
-
+print("Bot is starting")
 bot.start()
-print("Bot started")
