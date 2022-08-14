@@ -61,12 +61,12 @@ async def truth(ctx: interactions.CommandContext, question_type: str = None):
 
     c = db.cursor()
     c.execute(query2),
-    (id, response) = c.fetchone()[0]
+    (id, response) = c.fetchone()
     c.close()
     while id in recent_questions_2:
         c = db.cursor()
         c.execute(query2),
-        (id, response) = c.fetchone()[0]
+        (id, response) = c.fetchone()
         c.close()
 
     print(f"picked question: {id} from: {question_type}_truths")
