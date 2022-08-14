@@ -3,7 +3,7 @@ import random
 import interactions
 import mysql.connector
 
-bot = interactions.Client(token='')
+bot = interactions.Client(token=token)
 db = mysql.connector.connect(host="localhost", user="root", password="root", database="tod")
 
 c = db.cursor()
