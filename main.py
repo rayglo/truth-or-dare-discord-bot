@@ -37,20 +37,20 @@ c.close()
                      ]
                  ),
              ])
-async def truth(ctx: interactions.CommandContext, question_type: str):
+async def truth(ctx: interactions.CommandContext, question_type: str = None):
 
     if question_type is None:
         question_type = random.choices(["chill", "reflective"])
 
     if question_type=="chill":
         query1 = "SELECT chill_latest FROM servers WHERE server_id=%s"
-        query2 = "SELECT truth_text FROM (SELECT ROW_NUMBER() OVER() AS rn, * FROM reflective_truths) WHERE rn=%s"
+        query2 = "SELECT truth_text FROM (SELECT ROW_NUMBER() OVER() AS 'rn', * FROM reflective_truths) WHERE rn=%s"
         query3 = "UPDATE servers SET chill_latest = %s WHERE server_id=%s"
         randmax = n_chill_truths
 
     if question_type=="reflective":
         query1 = "SELECT reflective_latest FROM servers WHERE server_id=%s"
-        query2 = "SELECT truth_text FROM (SELECT ROW_NUMBER() OVER() AS rn, * FROM reflective_truths) WHERE rn=%s"
+        query2 = "SELECT truth_text FROM (SELECT ROW_NUMBER() OVER() AS 'rn', * FROM reflective_truths) WHERE rn=%s"
         query3 = "UPDATE servers SET reflective_latest = %s WHERE server_id=%s"
         randmax = n_reflective_truths
 
