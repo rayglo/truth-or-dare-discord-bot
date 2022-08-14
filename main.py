@@ -28,7 +28,7 @@ async def truth(ctx: interactions.CommandContext):
     c.close()
     n_rand = random.randint(1, n_truths)
     while n_rand in recent_questions_2:
-        n_rand = random.randint(1, ((n_truths-1)*10)+2, 10)
+        n_rand = random.randrange(1, ((n_truths-1)*10)+2, 10)
     print(f"picked question: {n_rand}")
     if len(recent_questions_2) >= 10:
         recent_questions_2.pop()
