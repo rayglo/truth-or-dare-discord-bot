@@ -38,17 +38,18 @@ c.close()
                  ),
              ])
 async def truth(ctx: interactions.CommandContext, question_type: str = None):
-
+    print(f"question requested. Type: {question_type}")
     if question_type is None:
         question_type = random.choices(["chill", "reflective"])
+        print(f"Type assigned: {question_type}")
 
-    if question_type=="chill":
+    if question_type == "chill":
         query1 = "SELECT chill_latest FROM servers WHERE server_id=%s"
         query2 = "SELECT truth_text FROM (SELECT ROW_NUMBER() OVER() AS 'rn', * FROM reflective_truths) WHERE rn=%s"
         query3 = "UPDATE servers SET chill_latest = %s WHERE server_id=%s"
         randmax = n_chill_truths
 
-    if question_type=="reflective":
+    if question_type == "reflective":
         query1 = "SELECT reflective_latest FROM servers WHERE server_id=%s"
         query2 = "SELECT truth_text FROM (SELECT ROW_NUMBER() OVER() AS 'rn', * FROM reflective_truths) WHERE rn=%s"
         query3 = "UPDATE servers SET reflective_latest = %s WHERE server_id=%s"
