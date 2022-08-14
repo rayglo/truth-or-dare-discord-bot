@@ -40,7 +40,7 @@ c.close()
 async def truth(ctx: interactions.CommandContext, question_type: str = None):
     print(f"question requested. Type: {question_type}")
     if question_type is None:
-        question_type = random.choices(["chill", "reflective"])
+        question_type = random.choice(["chill", "reflective"])
         print(f"Type assigned: {question_type}")
 
     if question_type == "chill":
