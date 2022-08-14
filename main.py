@@ -47,13 +47,11 @@ async def truth(ctx: interactions.CommandContext, question_type: str = None):
         query1 = "SELECT chill_latest FROM servers WHERE server_id=%s"
         query2 = "SELECT id, truth_text FROM chill_truths ORDER BY RAND() LIMIT 1;"
         query3 = "UPDATE servers SET chill_latest = %s WHERE server_id=%s"
-        randmax = n_chill_truths
 
     if question_type == "reflective":
         query1 = "SELECT reflective_latest FROM servers WHERE server_id=%s"
         query2 = "SELECT id, truth_text FROM reflective_truths ORDER BY RAND() LIMIT 1;"
         query3 = "UPDATE servers SET reflective_latest = %s WHERE server_id=%s"
-        randmax = n_reflective_truths
 
     c = db.cursor()
     c.execute(query1, (str(ctx.guild_id),))
@@ -63,12 +61,12 @@ async def truth(ctx: interactions.CommandContext, question_type: str = None):
 
     c = db.cursor()
     c.execute(query2),
-    id, response = c.fetchone()[0]
+    (id, response) = c.fetchone()[0]
     c.close()
     while id in recent_questions_2:
         c = db.cursor()
         c.execute(query2),
-        id, response = c.fetchone()[0]
+        (id, response) = c.fetchone()[0]
         c.close()
 
     print(f"picked question: {id} from: {question_type}_truths")
