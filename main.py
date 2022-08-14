@@ -3,6 +3,8 @@ import random
 import interactions
 import mysql.connector
 
+MEMORY = 10
+
 bot = interactions.Client(token=os.getenv("token"))
 db = mysql.connector.connect(host=os.getenv("db_host"),
                              user=os.getenv("db_user"),
@@ -30,7 +32,7 @@ async def truth(ctx: interactions.CommandContext):
     while n_rand in recent_questions_2:
         n_rand = random.randrange(1, ((n_truths-1)*10)+2, 10)
     print(f"picked question: {n_rand}")
-    if len(recent_questions_2) >= 10:
+    if len(recent_questions_2) >= MEMORY:
         recent_questions_2.pop()
     recent_questions_2.insert(0, n_rand)
     converted_questions = [str(x) for x in recent_questions_2]
@@ -57,13 +59,14 @@ async def on_guild_create(ctx: interactions.api.Guild):
     result = c.fetchone()[0]
     c.close()
     c = db.cursor()
+    memory_array = ",".split([0 for x in MEMORY])
     if result == 0:
-        query2 = "INSERT INTO servers(server_id,server_name,array_latest) VALUES (%s,%s,'0,0,0,0,0,0,0,0,0,0');"
-        c.execute(query2, (str(ctx.id), str(ctx.name)))
+        query2 = "INSERT INTO servers(server_id,server_name,array_latest) VALUES (%s,%s,%s);"
+        c.execute(query2, (str(ctx.id), str(ctx.name), memory_array))
         print(f"Inserting id: {ctx.id}, name: {ctx.name}")
     else:
-        query2 = "UPDATE servers SET server_name = %s, array_latest = '0,0,0,0,0,0,0,0,0,0' WHERE server_id=%s;"
-        c.execute(query2, (str(ctx.name), str(ctx.id)))
+        query2 = "UPDATE servers SET server_name = %s, array_latest = %s WHERE server_id=%s;"
+        c.execute(query2, (str(ctx.name), memory_array, str(ctx.id)))
         print(f"Updating id: {ctx.id}, name: {ctx.name}")
     db.commit()
     c.close()
