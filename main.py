@@ -1,9 +1,9 @@
+import os
 import random
-
 import interactions
 import mysql.connector
 
-bot = interactions.Client(token=token)
+bot = interactions.Client(token=os.getenv("token"))
 db = mysql.connector.connect(host="localhost", user="root", password="root", database="tod")
 
 c = db.cursor()
