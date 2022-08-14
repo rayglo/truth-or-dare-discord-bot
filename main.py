@@ -24,13 +24,12 @@ async def truth(ctx: interactions.CommandContext):
     c = db.cursor()
     c.execute(query1, (str(ctx.guild_id),))
     recent_questions_1 = (c.fetchone()[0]).split(',')
-    print(recent_questions_1)
     recent_questions_2 = [int(x) for x in recent_questions_1]
-    print(recent_questions_2)
     c.close()
     n_rand = random.randint(1, n_truths)
     while n_rand in recent_questions_2:
         n_rand = random.randint(1, ((n_truths-1)*10)+2, 10)
+    print(f"picked question: {n_rand}")
     if len(recent_questions_2) >= 10:
         recent_questions_2.pop()
     recent_questions_2.insert(0, n_rand)
