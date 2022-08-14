@@ -59,7 +59,7 @@ async def on_guild_create(ctx: interactions.api.Guild):
     result = c.fetchone()[0]
     c.close()
     c = db.cursor()
-    memory_array = ",".split([0 for x in range(MEMORY)])
+    memory_array = ",".join(["0" for x in range(MEMORY)])
     if result == 0:
         query2 = "INSERT INTO servers(server_id,server_name,array_latest) VALUES (%s,%s,%s);"
         c.execute(query2, (str(ctx.id), str(ctx.name), memory_array))
