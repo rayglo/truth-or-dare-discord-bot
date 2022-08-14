@@ -17,6 +17,7 @@ c.close()
 
 
 @bot.command(name="truth",
+             description="A cool question for you",
              scope=840200870359466004,
              options=[
                  interactions.Option(
@@ -37,7 +38,7 @@ async def truth(ctx: interactions.CommandContext, q_type: str):
     recent_questions_1 = (c.fetchone()[0]).split(',')
     recent_questions_2 = [int(x) for x in recent_questions_1]
     c.close()
-    n_rand = random.randrange(1, ((n_truths-1)*10)+2,10)
+    n_rand = random.randrange(1, ((n_truths-1)*10)+2, 10)
     while n_rand in recent_questions_2:
         n_rand = random.randrange(1, ((n_truths-1)*10)+2, 10)
     print(f"picked question: {n_rand}")
