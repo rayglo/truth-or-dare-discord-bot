@@ -18,9 +18,7 @@ print(f"rows in truths: {n_truths}")
 c.close()
 
 
-@bot.command(name="truth",
-             description="comando di prova",
-             scope=840200870359466004)
+@bot.command(name="truth")
 async def truth(ctx: interactions.CommandContext):
     query1 = "SELECT array_latest FROM servers WHERE server_id=%s"
     c = db.cursor()
