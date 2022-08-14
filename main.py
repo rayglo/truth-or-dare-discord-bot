@@ -45,13 +45,13 @@ async def truth(ctx: interactions.CommandContext, question_type: str = None):
 
     if question_type == "chill":
         query1 = "SELECT chill_latest FROM servers WHERE server_id=%s"
-        query2 = "SELECT truth_text FROM (SELECT ROW_NUMBER() OVER() AS 'rn', * FROM reflective_truths) WHERE rn=%s"
+        query2 = "SELECT id, truth_text FROM chill_truths ORDER BY RAND() LIMIT 1;"
         query3 = "UPDATE servers SET chill_latest = %s WHERE server_id=%s"
         randmax = n_chill_truths
 
     if question_type == "reflective":
         query1 = "SELECT reflective_latest FROM servers WHERE server_id=%s"
-        query2 = "SELECT truth_text FROM (SELECT ROW_NUMBER() OVER() AS 'rn', * FROM reflective_truths) WHERE rn=%s"
+        query2 = "SELECT id, truth_text FROM reflective_truths ORDER BY RAND() LIMIT 1;"
         query3 = "UPDATE servers SET reflective_latest = %s WHERE server_id=%s"
         randmax = n_reflective_truths
 
@@ -60,18 +60,21 @@ async def truth(ctx: interactions.CommandContext, question_type: str = None):
     recent_questions_1 = (c.fetchone()[0]).split(',')
     recent_questions_2 = [int(x) for x in recent_questions_1]
     c.close()
-    n_rand = random.randint(1, randmax)
-    while n_rand in recent_questions_2:
-        n_rand = random.randint(1, randmax)
-    c = db.cursor()
-    c.execute(query2, (n_rand,))
-    response = c.fetchone()[0]
-    c.close()
 
-    print(f"picked question: {n_rand} from: {question_type}_truths")
+    c = db.cursor()
+    c.execute(query2),
+    id, response = c.fetchone()[0]
+    c.close()
+    while id in recent_questions_2:
+        c = db.cursor()
+        c.execute(query2),
+        id, response = c.fetchone()[0]
+        c.close()
+
+    print(f"picked question: {id} from: {question_type}_truths")
     if len(recent_questions_2) >= 10:
         recent_questions_2.pop()
-    recent_questions_2.insert(0, n_rand)
+    recent_questions_2.insert(0, id)
     converted_questions = [str(x) for x in recent_questions_2]
 
     c = db.cursor()
