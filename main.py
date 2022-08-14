@@ -38,7 +38,7 @@ c.close()
                  ),
              ])
 async def truth(ctx: interactions.CommandContext, question_type: str = None):
-    print(f"question requested. Type: {question_type}")
+    print(f"{ctx.user.username} requested question in {ctx.guild.name}. Type: {question_type}")
     if question_type is None or (question_type != "chill" and question_type != "reflective"):
         question_type = random.choice(["chill", "reflective"])
         print(f"Type assigned: {question_type}")
@@ -69,7 +69,7 @@ async def truth(ctx: interactions.CommandContext, question_type: str = None):
         (id, response) = c.fetchone()
         c.close()
 
-    print(f"picked question: {id} from: {question_type}_truths")
+    print(f"picked question {id} from {question_type}_truths")
     if len(recent_questions_2) >= 10:
         recent_questions_2.pop()
     recent_questions_2.insert(0, id)
