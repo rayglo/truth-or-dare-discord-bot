@@ -7,7 +7,6 @@ bot = interactions.Client(token=os.getenv("token"))
 
 @bot.command(name="truth",
              description="A cool question for you",
-             scope=840200870359466004,
              options=[
                  interactions.Option(
                      name="question_type",
