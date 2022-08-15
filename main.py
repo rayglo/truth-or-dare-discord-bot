@@ -4,11 +4,6 @@ import interactions
 import mysql.connector
 
 bot = interactions.Client(token=os.getenv("token"))
-db = mysql.connector.connect(host=os.getenv("db_host"),
-                             user=os.getenv("db_user"),
-                             password=os.getenv("db_pass"),
-                             database=os.getenv("db_name"))
-
 
 @bot.command(name="truth",
              description="A cool question for you",
@@ -26,7 +21,11 @@ db = mysql.connector.connect(host=os.getenv("db_host"),
                  ),
              ])
 async def truth(ctx: interactions.CommandContext, question_type: str = None):
-    print(f"Question requested by {ctx.author.nick}. Type: {question_type}")
+    db = mysql.connector.connect(host=os.getenv("db_host"),
+                                 user=os.getenv("db_user"),
+                                 password=os.getenv("db_pass"),
+                                 database=os.getenv("db_name"))
+    print(f"Question requested by {ctx.}. Type: {question_type}")
     if question_type is None or (question_type != "chill" and question_type != "reflective"):
         question_type = random.choice(["chill", "reflective"])
         print(f"Type assigned: {question_type}")
@@ -66,12 +65,16 @@ async def truth(ctx: interactions.CommandContext, question_type: str = None):
     c.execute(query3, (",".join(converted_questions), str(ctx.guild_id)))
     db.commit()
     c.close()
-
+    db.close()
     await ctx.send(embeds=interactions.Embed(title=response, description=f"type: {question_type} | id: {id}"))
 
 
 @bot.event()
 async def on_guild_create(ctx: interactions.api.Guild):
+    db = mysql.connector.connect(host=os.getenv("db_host"),
+                                 user=os.getenv("db_user"),
+                                 password=os.getenv("db_pass"),
+                                 database=os.getenv("db_name"))
     query1 = "SELECT COUNT(*) FROM servers WHERE server_id=%s"
     c = db.cursor()
     c.execute(query1, (int(ctx.id),))
@@ -90,6 +93,7 @@ async def on_guild_create(ctx: interactions.api.Guild):
         print(f"Updating id: {ctx.id}, name: {ctx.name}")
     db.commit()
     c.close()
+    db.close()
 
 print("Bot is starting")
 bot.start()
