@@ -86,8 +86,7 @@ async def on_guild_create(ctx: interactions.api.Guild):
         c.execute(query2, (str(ctx.id), str(ctx.name)))
         print(f"Inserting id: {ctx.id}, name: {ctx.name}")
     else:
-        query2 = "UPDATE servers SET server_name = %s, " \
-                 "chill_latest = '0,0,0,0,0,0,0,0,0,0',reflective_latest = '0,0,0,0,0,0,0,0,0,0' WHERE server_id=%s;"
+        query2 = "UPDATE servers SET server_name = %s WHERE server_id=%s;"
         c.execute(query2, (str(ctx.name), str(ctx.id)))
         print(f"Updating id: {ctx.id}, name: {ctx.name}")
     db.commit()
