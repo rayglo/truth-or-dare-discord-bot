@@ -70,12 +70,13 @@ async def truth(ctx: interactions.CommandContext, question_type: str = None):
 @bot.command(name="help",
              description="How to use Truth or Dare!")
 async def help(ctx: interactions.CommandContext):
-    ctx.send(embeds=interactions.Embed(title="Help", description="Use the truth slash command to get a question. Questions"
-                                                                 "can be of two types:\n\n"
-                                                                 "-chill: Simple questions about everyday stuff\n"
-                                                                 "-reflective: Questions about more personal and deep topics\n\n"
-                                                                 "You can specify as an optional argument the type of question "
-                                                                 "(chill or reflective).\n\nCredits - Programming: rayglo - Questions: Sock"))
+    await ctx.send(embeds=interactions.Embed(title="Help", description='Use the truth slash command to get a question. '
+                                                                 'Questions can be of two types:\n\n'
+                                                                 '-chill: Simple questions about everyday stuff\n'
+                                                                 '-reflective: Questions about more personal and deep topics\n\n'
+                                                                 'You can specify as an optional argument the type of question '
+                                                                 '(chill or reflective). At the moment only "truths" are available\n\n'
+                                                                 'Credits - Programming: rayglo - Questions: Sock'))
 
 @bot.event()
 async def on_guild_create(ctx: interactions.api.Guild):
