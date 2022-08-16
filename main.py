@@ -75,7 +75,7 @@ async def help(ctx: interactions.CommandContext):
                                                                  '-chill: Simple questions about everyday stuff\n'
                                                                  '-reflective: Questions about more personal and deep topics\n\n'
                                                                  'You can specify as an optional argument the type of question '
-                                                                 '(chill or reflective). At the moment only "truths" are available\n\n'
+                                                                 '(chill or reflective).\nAt the moment only "truths" are available.\n\n'
                                                                  'Credits - Programming: rayglo - Questions: Sock'))
 
 @bot.event()
